@@ -1,0 +1,5 @@
+Multi-Insert statement
+
+From [mainTable]
+insert overwrite table [tableName] [selectStatment]
+insert into table [tableName] [selectStatment]

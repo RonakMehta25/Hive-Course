@@ -1,0 +1,13 @@
+Views and partioned Views in Hive
+
+We can create View in Hive like
+
+Create View View_Name as select ....
+
+
+We can also create partitioned view in Hive
+
+ CREATE VIEW log_view PARTITIONED ON (pagename,year,month,day) AS SELECT uid,properties,pagename, year,month,day FROM log; 
+
+
+partition columns must be last in select statement query.

@@ -1,0 +1,17 @@
+Hive Architecture
+
+It consist of 
+
+1. Hive Metastore
+It is where Hive stores it's own metadata. 
+This metastore is a relational database.
+It uses lightweight derby database.
+
+2. Hive Client(Thrift client,JDBC Driver,ODBC Driver)
+
+3. Hive Compiler 
+
+4. Hive Execution Engine.
+
+
+HiveQL is translated into Mapreduce Jobs

@@ -1,0 +1,21 @@
+Matrialsed Views
+
+A materialized view is a view where the query gets run and the data gets saved in an actual table.
+
+
+
+One of the biggest benefit of using a materialized view is that Oracle takes care of keeping the data in sync. If you have a separate aggregate table, you are responsible for keeping the data synchronized. That generally requires a reasonable amount of code and a decent amount of testing and most organizations manage to make mistakes that leave holes that cause the aggregate table to get out of sync. This is particularly true when you try to implement incremental refreshes of the aggregate table.
+
+Another major benefit is that, depending on the settings, Oracle can use query rewrite to use materialized views when users issue queries against base tables. So, for example, if you have a bunch of existing reports against a detail table that produce daily, monthly, and yearly aggregate results, you can create a materialized view on the base table that aggregates the data at a daily level and the optimizer can utilize that materialized view for all your existing queries. This makes it much easier to optimize reporting workloads in a data warehouse without trying to go and rewrite dozens of reports to use your new aggregate table or to mess with DBMS_ADVANCED_REWRITE to force your own rewrites of the queries.
+
+Materialized views can be stored in external systems, e.g., Druid, using custom storage handlers. For instance, the following statement creates a materialized view that is stored in Druid:
+
+Example:
+CREATE MATERIALIZED VIEW druid_wiki_mv
+STORED AS 'org.apache.hadoop.hive.druid.DruidStorageHandler'
+AS
+SELECT __time, page, user, c_added, c_removed
+FROM src;
+
+ALTER MATERIALIZED VIEW [db_name.]materialized_view_name REBUILD;
+

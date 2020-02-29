@@ -1,0 +1,15 @@
+Storage Handlers in Hive
+
+Allow Hive to access data stored and managed by other systems in a modular, extensible fashion.
+
+Before storage handlers, Hive already had a concept of managed vs external tables. A managed table is one for which the definition is primarily managed in Hive's metastore, and for whose data storage Hive is responsible. An external table is one whose definition is managed in some external catalog, and whose data Hive does not own (i.e. it will not be deleted when the table is dropped).
+
+Storage handlers introduce a distinction between native and non-native tables. A native table is one which Hive knows how to manage and access without a storage handler; a non-native table is one which requires a storage handler.
+
+managed native: what you get by default with CREATE TABLE
+
+external native: what you get with CREATE EXTERNAL TABLE when no STORED BY clause is specified
+
+managed non-native: what you get with CREATE TABLE when a STORED BY clause is specified; Hive stores the definition in its metastore, but does not create any files itself; instead, it calls the storage handler with a request to create a corresponding object structure
+
+external non-native: what you get with CREATE EXTERNAL TABLE when a STORED BY clause is specified; Hive registers the definition in its metastore and calls the storage handler to check that it matches the primary definition in the other system

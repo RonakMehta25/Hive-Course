@@ -1,0 +1,24 @@
+Bucketing
+
+Basically, the concept of Hive Partitioning provides a way of segregating hive table data into multiple files/directories. However, it only gives effective results in few scenarios. Such as:
+
+– When there is the limited number of partitions.
+– Or, while partitions are of comparatively equal size.
+
+Syntax is cluster by 
+
+we can use sorting with bucketing which can help in joins
+
+we can not directly load bucketed tables with LOAD DATA (LOCAL) INPATH command, similar to partitioned tables. Instead to populate the bucketed tables we need to use INSERT OVERWRITE TABLE … SELECT …FROM clause from another table. 
+
+
+Hence, we will create one temporary table in hive with all the columns in input file from that table we will copy into our target bucketed table for this.
+
+set hive.enforce.bucketing = true;
+
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nonstrict; (strict implies that atleast 1 static partition needs to be mentioned)
+
+Number of reduce task is equal to the number of buckets
+
+mapred.reduce.tasks=32
